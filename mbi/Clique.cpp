@@ -1,6 +1,3 @@
-//
-// Created by 李鑫豪 on 2024/6/25.
-//
 
 #include <algorithm>
 #include "Clique.h"

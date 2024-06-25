@@ -1,6 +1,3 @@
-//
-// Created by Asunalxh on 2024/6/25.
-//
 
 #ifndef AIM_CPP_CLIQUEVECTOR_H
 #define AIM_CPP_CLIQUEVECTOR_H

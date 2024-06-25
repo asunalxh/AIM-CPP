@@ -10,4 +10,6 @@ include_directories(util)
 aux_source_directory(mbi MBI_CFILE)
 
 add_executable(AIM_CPP main.cpp
-        ${MBI_CFILE})
+        ${MBI_CFILE}
+        mbi/JunctionTree.cpp
+        mbi/JunctionTree.h)

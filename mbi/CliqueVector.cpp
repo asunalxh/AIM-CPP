@@ -1,6 +1,4 @@
-//
-// Created by Asunalxh on 2024/6/25.
-//
+
 
 #include "CliqueVector.h"
 
