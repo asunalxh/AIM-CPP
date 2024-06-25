@@ -3,7 +3,7 @@
 #ifndef AIM_CPP_DATASET_H
 #define AIM_CPP_DATASET_H
 
-#include "NumCpp.hpp"
+#include "../Library/NumCpp.hpp"
 #include "Domain.h"
 #include "../util/common.h"
 #include "Clique.h"

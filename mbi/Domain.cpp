@@ -88,3 +88,7 @@ bool Domain::operator==(const Domain &domain) const {
     return this->config == domain.config && this->attrOrder == domain.attrOrder;
 }
 
+int Domain::length() const {
+    return this->attrOrder.size();
+}
+

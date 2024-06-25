@@ -21,15 +21,16 @@ public:
 
     bool isSubsetOf(const Clique &clique) const;
 
+    Attribute at(const int &i) const;
+
+    Attribute &operator[](const int &i);
+
     Clique &operator+=(const Clique &clique);
 
     Clique operator+(const Clique &clique) const;
 
-    Attribute at(const int& i) const;
-
-    Attribute &operator[](const int &i);
-
     bool operator==(const Clique &clique) const;
+
     bool operator<(const Clique &clique) const;
 };
 

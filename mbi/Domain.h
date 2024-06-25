@@ -21,6 +21,8 @@ public:
 
     int size(const Clique &attrs) const;
 
+    int length() const;
+
     std::vector<int> sizeList() const;
 
     Domain project(const Clique &attrs) const;
