@@ -9,5 +9,10 @@ include_directories(library)
 
 aux_source_directory(mbi MBI_CFILE)
 
+
 add_executable(AIM_CPP main.cpp
-        ${MBI_CFILE})
+        ${GRAPH}
+        util/Graph.hpp
+)
+
+

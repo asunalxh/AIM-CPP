@@ -1,34 +1,30 @@
 #include <iostream>
 #include "library/NumCpp.hpp"
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/prim_minimum_spanning_tree.hpp>
-#include <boost/graph/graph_traits.hpp>
+#include "util/Graph.hpp"
 
 
 using namespace std;
 using namespace nc;
 
-//using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;
 
 using namespace boost;
-// 定义图类型，使用 listS 作为顶点存储类型
-typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, no_property, property<edge_weight_t, int> > Graph;
 
 int main() {
-    // 创建一个无向图
-    Graph g;
+    Graph<int> g(false);
 
-    // 添加一些顶点和边
-    add_edge(0, 1, 3, g);
-    add_edge(0, 3, 5, g);
-    add_edge(1, 2, 3, g);
-    add_edge(3, 2, 2, g);
-    add_edge(1, 4, 7, g);
-    add_edge(3, 4, 6, g);
+    g.addEdge(1,2);
+    g.addEdge(1,3);
+    g.addEdge(2,3);
+    g.addEdge(3,4);
+    g.addEdge(2,4);
+    g.addEdge(5,4);
 
+    auto ret = g.findCliques();
 
-    std::vector<graph_traits<Graph>::edge_descriptor> spanning_tree;
-    boost::prim_minimum_spanning_tree(g, back_inserter(spanning_tree));
-
-    return 0;
+    for(auto clique:ret){
+        for(auto x : clique){
+            cout << x << ' ';
+        }
+        cout << endl;
+    }
 }
