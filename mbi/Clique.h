@@ -21,7 +21,7 @@ public:
 
     bool isSubsetOf(const Clique &clique) const;
 
-    bool isSameSetOf(const Clique &clique) const
+//    bool isSameSetOf(const Clique &clique) const;
 
     Attribute at(const int &i) const;
 

@@ -41,6 +41,9 @@ public:
     int at(const Attribute &attr) const;
 
     bool operator==(const Domain &domain) const;
+
+
+    Clique canonical(const Clique& clique) const;
 };
 
 

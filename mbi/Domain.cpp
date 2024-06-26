@@ -92,3 +92,13 @@ int Domain::length() const {
     return this->attrOrder.size();
 }
 
+Clique Domain::canonical(const Clique &clique) const {
+    std::vector<Attribute> attrs;
+    for (auto &x: this->attrOrder.getAttrList())
+        if (clique.contains(x)) {
+            attrs.push_back(x);
+        }
+    return {attrs};
+}
+
+

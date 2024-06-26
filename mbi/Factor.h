@@ -5,7 +5,7 @@
 
 
 #include "Domain.h"
-#include "../Library/NumCpp.hpp"
+#include "../library/NumCpp.hpp"
 #include "Clique.h"
 
 class Factor {

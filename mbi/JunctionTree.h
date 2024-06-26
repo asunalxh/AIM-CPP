@@ -9,16 +9,14 @@
 #include <vector>
 
 
-using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;
+using Graph = boost::adjacency_list<boost::listS, boost::listS, boost::undirectedS>;
 
 class JunctionTree {
-    Graph graph;
+
     std::vector<Clique> cliques;
     Domain domain;
 
-    void make_graph();
-
-    Graph triangulated(std::vector<Attribute> order);
+    void makeTree(const std::vector<Attribute> &order);
 
 public:
     std::vector<Attribute> greedy_order();
