@@ -12,5 +12,6 @@ using DATASET_VALUE_TYPE = int;
 using FACTOR_TYPE = double;
 
 
+
 #endif //AIM_CPP_COMMON_H
 

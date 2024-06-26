@@ -46,6 +46,17 @@ Clique Clique::operator+(const Clique &clique) const {
     return ret;
 }
 
+
+Clique &Clique::operator-=(const Clique &clique) {
+    std::vector<Attribute> attrs;
+    for (auto &a: this->attrs)
+        if (!clique.contains(a)) {
+            attrs.push_back(a);
+        }
+    this->attrs = attrs;
+    return *this;
+}
+
 std::vector<Attribute> Clique::getAttrList() const {
     return this->attrs;
 }
@@ -69,6 +80,54 @@ bool Clique::operator==(const Clique &clique) const {
 
 bool Clique::operator<(const Clique &clique) const {
     return this->attrs < clique.attrs;
+}
+
+
+void Clique::remove(const Attribute &attr) {
+    std::remove(this->attrs.begin(), this->attrs.end(), attr);
+}
+
+void Clique::add(const Attribute &attr) {
+    this->attrs.push_back(attr);
+
+}
+
+Clique Clique::intersection(const Clique &clique) const {
+    std::vector<Attribute> attrs;
+    for (auto &a: this->attrs)
+        if (clique.contains(a)) {
+            attrs.push_back(a);
+        }
+    return {attrs};
+}
+
+bool Clique::operator!=(const Clique &clique) const {
+    return !(*this == clique);
+}
+
+Clique &Clique::operator=(const Clique &clique) {
+    this->attrs = clique.attrs;
+    return *this;
+}
+
+std::ostream &operator<<(std::ostream &os, const Clique &clique) {
+    os << '(';
+    for (int i = 0; i < clique.attrs.size(); i++) {
+        os << clique.attrs.at(i);
+        if (i != clique.attrs.size() - 1)
+            os << ',';
+        else
+            os << ')';
+    }
+    return os;
+}
+
+std::vector<Attribute>::iterator Clique::begin() {
+    return this->attrs.begin();
+}
+
+std::vector<Attribute>::iterator Clique::end() {
+    return this->attrs.end();
 }
 
 

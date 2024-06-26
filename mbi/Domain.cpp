@@ -1,10 +1,12 @@
 
 
 #include <cassert>
+#include <fstream>
+#include "../library/Json.hpp"
 #include "Domain.h"
 
 using namespace std;
-
+using json = nlohmann::json;
 
 Domain::Domain(const std::vector<Attribute> &attrs, const std::vector<int> &shape) : attrOrder(attrs) {
     assert(attrs.size() == shape.size());
@@ -99,6 +101,32 @@ Clique Domain::canonical(const Clique &clique) const {
             attrs.push_back(x);
         }
     return {attrs};
+}
+
+Domain Domain::FromFile(const char *path) {
+    fstream in(path, ios::in);
+    auto domain = json::parse(in);
+
+    vector<Attribute> attrs;
+    vector<int> shape;
+    for (auto k = domain.begin(); k != domain.end(); k++) {
+        attrs.push_back(k.key());
+        shape.push_back(k.value());
+    }
+
+    return {attrs, shape};
+}
+
+Domain Domain::invert(const Clique &d) const {
+    vector<Attribute> attrs;
+    vector<int> shape;
+    for (auto &k: this->attrOrder.getAttrList())
+        if (!d.contains(k)) {
+            attrs.push_back(k);
+            shape.push_back(this->config.at(k));
+        }
+
+    return {attrs, shape};
 }
 
 

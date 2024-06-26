@@ -19,11 +19,34 @@ public:
 
     Factor expand(const Domain &domain) const;
 
+    Factor project(Clique &clique) const;
+
+    Factor &operator+=(const Factor &factor);
+
     Factor operator+(const Factor &factor) const;
+
+    Factor &operator+=(const FACTOR_TYPE &value);
+
+    Factor &operator=(const FACTOR_TYPE &value);
+
+    Factor &operator*=(const FACTOR_TYPE &value);
+    Factor operator*(const Factor &factor);
+
+    Factor operator-(const Factor &factor) const;
+
+    double logsumexp() const;
+
+    double sum() const;
+
+    Factor exp() const;
 
     static Factor zeros(const Domain &domain);
 
     static Factor ones(const Domain &domain);
+
+    nc::NdArray<FACTOR_TYPE> datavector() const;
+
+    Domain getDomain();
 };
 
 

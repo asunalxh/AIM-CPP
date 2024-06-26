@@ -27,8 +27,9 @@ public:
 
     Domain project(const Clique &attrs) const;
 
-
     Domain merge(const Domain &d) const;
+
+    Domain invert(const Clique& d) const ;
 
     Clique getAttrOrder() const;
 
@@ -42,8 +43,9 @@ public:
 
     bool operator==(const Domain &domain) const;
 
-
     Clique canonical(const Clique& clique) const;
+
+    static Domain FromFile(const char* path);
 };
 
 

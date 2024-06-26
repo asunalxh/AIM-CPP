@@ -11,8 +11,7 @@ aux_source_directory(mbi MBI_CFILE)
 
 
 add_executable(AIM_CPP main.cpp
-        ${GRAPH}
-        util/Graph.hpp
+        ${MBI_CFILE}
 )
 
 

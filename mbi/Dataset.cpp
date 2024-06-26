@@ -57,13 +57,12 @@ nc::NdArray<DATASET_VALUE_TYPE> Dataset::datavector() const {
     return ret;
 }
 
-Dataset Dataset::project(const Clique &attrs) const {
+Dataset Dataset::project(Clique &attrs) const {
     vector<NdArray<DATASET_VALUE_TYPE >> cols;
-    for (const auto &k: attrs.getAttrList()) {
+    for (const auto &k: attrs) {
         int index = this->domain.getAttrOrder().index(k);
         cols.push_back(this->data(this->data.rSlice(), index));
     }
-
     return {nc::hstack(cols), this->domain.project(attrs)};
 }
 

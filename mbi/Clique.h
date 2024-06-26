@@ -4,6 +4,7 @@
 
 #include "../util/common.h"
 #include <vector>
+#include <iostream>
 
 
 class Clique {
@@ -29,11 +30,29 @@ public:
 
     Clique &operator+=(const Clique &clique);
 
+    Clique &operator=(const Clique &clique);
+
     Clique operator+(const Clique &clique) const;
 
     bool operator==(const Clique &clique) const;
 
+    bool operator!=(const Clique &clique) const;
+
     bool operator<(const Clique &clique) const;
+
+    Clique &operator-=(const Clique &clique);
+
+    void remove(const Attribute& attr);
+
+    void add(const Attribute& attr);
+
+    Clique intersection(const Clique& clique) const ;
+
+    friend std::ostream& operator<<(std::ostream& os,const Clique& clique);
+
+    std::vector<Attribute>::iterator begin();
+    std::vector<Attribute>::iterator end();
+
 };
 
 

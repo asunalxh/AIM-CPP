@@ -1,30 +1,23 @@
 #include <iostream>
 #include "library/NumCpp.hpp"
 #include "util/Graph.hpp"
-
+#include "mbi/JunctionTree.h"
 
 using namespace std;
 using namespace nc;
 
 
 using namespace boost;
+using T = vector<Attribute>;
 
 int main() {
-    Graph<int> g(false);
+    map<int,int>mp;
+    mp[1] = 1;
+    mp[2] = 2;
+    mp[3] = 3;
+    for(auto& [k,v] : mp)
+        v *= 10;
+    for(auto& [k,v] : mp)
+        cout << k << ' ' << v << '\n';
 
-    g.addEdge(1,2);
-    g.addEdge(1,3);
-    g.addEdge(2,3);
-    g.addEdge(3,4);
-    g.addEdge(2,4);
-    g.addEdge(5,4);
-
-    auto ret = g.findCliques();
-
-    for(auto clique:ret){
-        for(auto x : clique){
-            cout << x << ' ';
-        }
-        cout << endl;
-    }
 }

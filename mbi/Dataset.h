@@ -18,7 +18,7 @@ public:
 
     static Dataset FromFile(const char *dataPath, const char *domainPath);
 
-    Dataset project(const Clique &attrs) const ;
+    Dataset project(Clique &attrs) const ;
 
 };
 

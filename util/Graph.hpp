@@ -1,9 +1,11 @@
 
+#pragma once
 
 #include <list>
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <iostream>
 
 template<typename T>
 class Graph {
@@ -28,6 +30,8 @@ class Graph {
     std::list<Node> nodes;
     int count = 0;
     bool isDirected = false;
+
+
 public:
     struct Edge {
         T from;
@@ -49,15 +53,71 @@ public:
 
     std::vector<Edge> edges() const;
 
+    std::vector<T> getNodes() const;
+
     std::vector<std::set<T>> findCliques() const;
+
+    std::vector<T> topologicalSort();
+
+    void print();
 
 };
 
 template<typename T>
+std::vector<T> Graph<T>::getNodes() const {
+    std::vector<T> ret;
+    for (auto &node: this->nodes)
+        ret.push_back(node.id);
+    return ret;
+}
+
+template<typename T>
+std::vector<T> Graph<T>::topologicalSort() {
+    std::map<T, int> inbound;
+    for (Node &node: this->nodes) {
+        inbound[node.id] = 0;
+    }
+
+    for (Node &node: this->nodes) {
+        for (Neighbor &neighbor: node.neighbors) {
+            inbound[neighbor.id]++;
+        }
+    }
+
+    std::vector<T> ret;
+    std::set<T> mark;
+    for (Node &node: this->nodes)
+        if (mark.count(node.id) == 0 && inbound[node.id] == 0) {
+            ret.push_back(node.id);
+            for (Neighbor &neighbor: node.neighbors) {
+                inbound[neighbor.id]--;
+            }
+        }
+
+    return ret;
+}
+
+template<typename T>
+void Graph<T>::print() {
+    std::cout << "Node: ";
+    for (const Node &node: this->nodes)
+        std::cout << node.id << ' ';
+    std::cout << "Edges:\n";
+    for (const Node &node: this->nodes) {
+        std::cout << node.id << ": ";
+        for (auto neighbor: node.neighbors) {
+            std::cout << neighbor.id << ' ';
+        }
+        std::cout << "\n";
+    }
+}
+
+
+template<typename T>
 std::vector<std::set<T>> Graph<T>::findCliques() const {
     std::vector<std::set<T>> ret;
-    std::function<void(std::set<T>&, std::set<T>&, std::set<T>&)> bronKerbosch = [&](std::set<T>& R, std::set<T>& P,
-                                                                                  std::set<T>& X) {
+    std::function<void(std::set<T> &, std::set<T> &, std::set<T> &)> bronKerbosch = [&](std::set<T> &R, std::set<T> &P,
+                                                                                        std::set<T> &X) {
         if (P.empty() && X.empty()) {
             ret.push_back(R);
         }
@@ -67,9 +127,11 @@ std::vector<std::set<T>> Graph<T>::findCliques() const {
             for (auto x: std::find(this->nodes.begin(), this->nodes.end(), Node{v})->neighbors)
                 neighbors.insert(x.id);
             RS.insert(v);
-            std::set_intersection(P.begin(),P.end(),neighbors.begin(),neighbors.end(),std::inserter(PS,PS.begin()));
-            std::set_intersection(X.begin(),X.end(),neighbors.begin(),neighbors.end(),std::inserter(XS,XS.begin()));
-            bronKerbosch(RS,PS,XS);
+            std::set_intersection(P.begin(), P.end(), neighbors.begin(), neighbors.end(),
+                                  std::inserter(PS, PS.begin()));
+            std::set_intersection(X.begin(), X.end(), neighbors.begin(), neighbors.end(),
+                                  std::inserter(XS, XS.begin()));
+            bronKerbosch(RS, PS, XS);
 
             P.erase(v);
             X.insert(v);
@@ -79,7 +141,7 @@ std::vector<std::set<T>> Graph<T>::findCliques() const {
     std::set<T> R, P, X;
     for (auto &i: this->nodes)
         P.insert(i.id);
-    bronKerbosch(R,P,X);
+    bronKerbosch(R, P, X);
     return ret;
 }
 
@@ -121,20 +183,30 @@ void Graph<T>::addNode(const T &id) {
 
 template<typename T>
 void Graph<T>::addEdge(const T &from, const T &to, const int weight) {
+    if (std::find(this->nodes.begin(), this->nodes.end(), Node{from}) == this->nodes.end()) {
+        this->nodes.push_back({from});
+    }
+    if (std::find(this->nodes.begin(), this->nodes.end(), Node{to}) == this->nodes.end()) {
+        this->nodes.push_back({to});
+    }
+
     auto node = std::find(this->nodes.begin(), this->nodes.end(), Node{from});
-    if (node == this->nodes.end()) {
-        this->addNode(from);
-        node = std::find(this->nodes.begin(), this->nodes.end(), Node{from});
-    }
-    if (std::find(this->nodes.begin(), this->nodes.end(), Node{to}) == this->nodes.end())
-        this->addNode(to);
+    auto neighbor = std::find(node->neighbors.begin(), node->neighbors.end(), Neighbor{to});
+    if (neighbor == node->neighbors.end())
+        node->neighbors.push_back({to, weight});
+    else
+        neighbor->distance = weight;
 
-    node->neighbors.push_back(Neighbor{to, weight});
+    if (this->isDirected)
+        return;
 
-    if (!this->isDirected) {
-        node = std::find(this->nodes.begin(), this->nodes.end(), Node{to});
+    node = std::find(this->nodes.begin(), this->nodes.end(), Node{to});
+    neighbor = std::find(node->neighbors.begin(), node->neighbors.end(), Neighbor{from});
+    if (neighbor == node->neighbors.end())
         node->neighbors.push_back({from, weight});
-    }
+    else
+        neighbor->distance = weight;
+
 }
 
 
@@ -183,9 +255,9 @@ Graph<T> Graph<T>::minimum_spanning_tree() {
         return x.weight < y.weight;
     });
 
-    std::unordered_map<T, T> root;
+    std::map<T, T> root;
 
-    std::function<int(const T &)> getRoot = [&](const T &x) -> int {
+    std::function<T(const T &)> getRoot = [&](const T &x) -> T {
         if (root.find(x) == root.end())
             root[x] = x;
         if (root[x] != x)
@@ -209,9 +281,9 @@ std::vector<typename Graph<T>::Edge> Graph<T>::edges() const {
     std::vector<Edge> ret;
     for (auto &x: this->nodes) {
         for (auto &y: x.neighbors)
-            if (this->isDirected || x.id < y.id) {
-                ret.push_back({x.id, y.id, y.distance});
-            }
+//            if (this->isDirected || x.id < y.id) {
+            ret.push_back({x.id, y.id, y.distance});
+//            }
     }
     return ret;
 }
