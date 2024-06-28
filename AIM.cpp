@@ -8,7 +8,7 @@ using namespace std;
 using Candidates = vector<pair<Clique, double>>;
 
 set<Clique> downward_closure(vector<Clique> &workload) {
-    set<Clique> cliques;
+    std::set<Clique> cliques;
     for (auto &clique: workload) {
         stack<pair<int, Clique>> s;
         s.push({0, {}});
@@ -20,11 +20,12 @@ set<Clique> downward_closure(vector<Clique> &workload) {
                     cliques.insert(cl);
                 continue;
             }
-            s.emplace(i + 1, cl);
+            s.push({i + 1, cl});
             cl.add(clique[i]);
-            s.emplace(i + 1, cl);
+            s.push({i + 1, cl});
         }
     }
+    cout << cliques.size();
     return cliques;
 }
 
@@ -102,7 +103,7 @@ Dataset AIM::run(Dataset &data, vector<Clique> workload) {
     double epsilon = sqrt(8 * 0.1 * this->rho / ROUND);
 
     vector<Measurement> measurements;
-    cout << "Initial Sigma" << sigma << endl;
+    cout << "Initial Sigma " << sigma << endl;
 
 
     for (auto &cl: oneway) {
@@ -113,6 +114,8 @@ Dataset AIM::run(Dataset &data, vector<Clique> workload) {
     double rho_used = oneway.size() * 0.5 / (sigma * sigma);
 
     auto engine = Inference(domain);
+    engine.estimate(measurements);
+
     bool terminate = false;
     while (!terminate) {
         if (this->rho - rho_used < 2 * (0.5 / (sigma * sigma) + 1.0 / 8 * (epsilon * epsilon))) {
