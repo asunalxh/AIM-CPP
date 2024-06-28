@@ -88,7 +88,7 @@ Clique AIM::worst_approximated(vector<pair<Clique, double>> candidates, Inferenc
 
 }
 
-void AIM::run(Dataset &data, vector<Clique> workload) {
+Dataset AIM::run(Dataset &data, vector<Clique> workload) {
     auto domain = data.getDomain();
     int ROUND = 16 * domain.length();
     auto candidates = compile_workload(workload);
@@ -150,8 +150,7 @@ void AIM::run(Dataset &data, vector<Clique> workload) {
     cout << "Generating Data...";
     engine.setIters(2500);
     engine.estimate(measurements);
-
-
+    return engine.synthetic_data();
 
 }
 

@@ -19,7 +19,7 @@ class AIM {
                               Inference &model, double eps, double sigma);
 public:
     AIM(double epsilon,double delta);
-    void run(Dataset &data, std::vector<Clique> workload);
+    Dataset run(Dataset &data, std::vector<Clique> workload);
 };
 
 

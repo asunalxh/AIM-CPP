@@ -1,29 +1,34 @@
 #include <iostream>
-#include "library/NumCpp.hpp"
-#include "util/Graph.hpp"
-#include "mbi/JunctionTree.h"
-#include <stack>
+
+#include "mbi/Dataset.h"
+#include "AIM.h"
 
 using namespace std;
-using namespace nc;
 
-
-using namespace boost;
-using T = vector<Attribute>;
-
-
-struct Test {
-    int a, b, c;
-};
 
 int main() {
-    NdArray<int> data = {
-            {1, 2, 3},
-            {2, 3, 4},
-            {3, 4, 5}
-    };
+    double epsilon = 1.0, delta = 1e-9;
 
 
-    cout << data({0,2},{0,2});
+    Dataset data = Dataset::FromFile("../data/adult.csv", "../data/adult-domain.json");
+    auto attrs = data.getDomain().getAttrOrder().getAttrList();
 
+    std::vector<Clique> workload;
+
+    for (int i = 0; i < attrs.size(); i++)
+        for (int j = i + 1; j < attrs.size(); j++)
+            workload.emplace_back(vector{attrs[i], attrs[j]});
+
+    AIM aim(epsilon, delta);
+
+    auto synth = aim.run(data, workload);
+
+    double error = 0;
+    for (auto cl: workload) {
+        auto x = data.project(cl).datavector();
+        auto y = synth.project(cl).datavector();
+        error += nc::sum(nc::abs(x - y))(0, 0);
+    }
+    error /= workload.size();
+    cout << "Average Error: " << error;
 }

@@ -8,6 +8,7 @@
 #include "Measurement.h"
 #include "Domain.h"
 #include "GraphicalModel.h"
+#include "Dataset.h"
 #include <map>
 #include <memory>
 
@@ -41,7 +42,7 @@ public:
 
     void setIters(int iters);
 
-    nc::NdArray<int> synthetic_data();
+    Dataset synthetic_data();
 };
 
 

@@ -3,6 +3,7 @@
 //
 
 #include "Inference.h"
+#include "Dataset.h"
 #include <cmath>
 #include <unordered_map>
 
@@ -126,7 +127,7 @@ void Inference::setIters(int iters) {
     this->iters = iters;
 }
 
-nc::NdArray<int> Inference::synthetic_data() {
+Dataset Inference::synthetic_data() {
     int total = this->model->getTotal();
     auto attrs = this->domain.getAttrOrder().getAttrList();
     auto data = nc::zeros<int>(total, attrs.size());
@@ -179,10 +180,15 @@ nc::NdArray<int> Inference::synthetic_data() {
             for (int i = 0; i < total; i++) {
                 int startInd = nc::dot(data(i, data.cSlice()), weights)(0, 0);
                 auto p = marg(0, {startInd * domainSize, (startInd + 1) * domainSize});
-
+                data(i, j) = choice(p);
+            }
+        } else {
+            for (int i = 0; i < total; i++) {
+                data(i, j) = choice(marg);
             }
         }
 
     }
+    return Dataset{data, domain};
 
 }

@@ -47,6 +47,7 @@ public:
     Clique canonical(const Clique& clique) const;
 
     static Domain FromFile(const char* path);
+
 };
 
 

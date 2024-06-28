@@ -67,3 +67,22 @@ Domain Dataset::getDomain() const {
     return this->domain;
 }
 
+void Dataset::toFile(const char *path) const {
+    ofstream out(path, ios::out);
+    auto attrs = this->domain.getAttrOrder().getAttrList();
+    for (int i = 0; i < attrs.size(); i++) {
+        out << attrs[i];
+        if (i < attrs.size() - 1)
+            out << ',';
+    }
+    for (int i = 0; i < this->data.shape().rows; i++) {
+        for (int j = 0; j < this->data.shape().cols; j++) {
+            out << this->data(i, j);
+            if (j < this->data.shape().cols - 1)
+                out << ',';
+        }
+        out << endl;
+    }
+
+}
+

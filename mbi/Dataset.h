@@ -22,6 +22,7 @@ public:
 
     Domain getDomain() const;
 
+    void toFile(const char* path) const;
 };
 
 
