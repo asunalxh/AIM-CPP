@@ -33,7 +33,7 @@ double cdp_delta(double rho, double eps) {
     if (rho == 0)
         return 0;
     double amin = 1.01;
-    double amax = (eps + 1) / (2 + rho) + 2;
+    double amax = (eps + 1) / (2 * rho) + 2;
     double alpha = 0;
     for (int i = 0; i < 1000; i++) {
         alpha = (amin + amax) / 2;
