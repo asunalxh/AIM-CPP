@@ -14,18 +14,25 @@ class Inference {
     Domain domain;
 
     bool warm_start = false;
-    std::map<Clique,std::vector<Measurement>> groups;
+    std::map<Clique, std::vector<Measurement>> groups;
 
-    CliqueVector potentials;
+    CliqueVector potentials, marginals;
 
     GraphicalModel model;
 
     int iters;
 
 public:
-    void setup(std::vector<Measurement>& measurements);
-    std::pair<double,CliqueVector> marginal_loss(CliqueVector &marginals);
-    void mirror_descent(std::vector<Measurement>& measurements);
+    void setup(std::vector<Measurement> &measurements);
+
+    std::pair<double, CliqueVector> marginal_loss(CliqueVector &marginals);
+
+    void mirror_descent(std::vector<Measurement> &measurements);
+
+    Factor project(Clique & clique);
+
+
+    Domain getDomain() const;
 };
 
 

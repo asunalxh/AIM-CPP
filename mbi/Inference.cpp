@@ -96,5 +96,18 @@ void Inference::mirror_descent(vector<Measurement> &measurements) {
 
     }
     this->potentials = theta;
+    this->marginals = mu;
 
+}
+
+Factor Inference::project(Clique &clique) {
+    for (auto &cl: this->model.getCliques()) {
+        if (clique.isSubsetOf(cl))
+            return this->marginals[cl].project(clique);
+    }
+    return Factor();
+}
+
+Domain Inference::getDomain() const {
+    return this->domain;
 }

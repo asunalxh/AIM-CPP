@@ -25,8 +25,6 @@ public:
 
     CliqueVector belief_propagation(const CliqueVector &potentials);
 
-//    void combine(const GraphicalModel& model);
-
     std::vector<Clique> getCliques();
 
     double getTotal() const;
