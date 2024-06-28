@@ -46,7 +46,7 @@ public:
 
     nc::NdArray<FACTOR_TYPE> datavector() const;
 
-    Domain getDomain();
+    Domain & getDomain();
 };
 
 

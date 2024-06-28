@@ -20,6 +20,7 @@ public:
     int size() const;
 
     int size(const Clique &attrs) const;
+    int size(const Attribute &attrs) const;
 
     int length() const;
 

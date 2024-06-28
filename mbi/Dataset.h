@@ -9,16 +9,18 @@
 #include "Clique.h"
 
 class Dataset {
-    nc::NdArray<DATASET_VALUE_TYPE> data;
+    nc::NdArray<int> data;
     Domain domain;
 public:
-    Dataset(const nc::NdArray<DATASET_VALUE_TYPE> &data, const Domain &domain);
+    Dataset(const nc::NdArray<int> &data, const Domain &domain);
 
-    nc::NdArray<DATASET_VALUE_TYPE> datavector() const;
+    nc::NdArray<double> datavector() const;
 
     static Dataset FromFile(const char *dataPath, const char *domainPath);
 
     Dataset project(Clique &attrs) const ;
+
+    Domain getDomain() const;
 
 };
 

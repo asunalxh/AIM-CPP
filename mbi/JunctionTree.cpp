@@ -124,3 +124,7 @@ std::vector<Clique> JunctionTree::maximal_cliques() {
 std::vector<Clique> JunctionTree::neighbors(const Clique &clique) {
     return this->tree.neighbors(clique);
 }
+
+std::vector<Attribute> JunctionTree::getOrder() {
+    return this->order;
+}

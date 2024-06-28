@@ -29,6 +29,10 @@ public:
 
     double getTotal() const;
 
+    int size() const;
+
+    std::vector<Attribute> getOrder();
+
 };
 
 

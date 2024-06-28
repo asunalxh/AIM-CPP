@@ -48,3 +48,16 @@ std::vector<Clique> GraphicalModel::getCliques() {
 double GraphicalModel::getTotal() const {
     return this->total;
 }
+
+int GraphicalModel::size() const {
+    int ret = 0;
+    for(auto& cl : this->cliques)
+        ret += this->domain.size(cl);
+    return ret;
+}
+
+std::vector<Attribute> GraphicalModel::getOrder() {
+    return this->tree.getOrder();
+}
+
+

@@ -3,8 +3,10 @@
 #include "../library/NumCpp.hpp"
 #include <cmath>
 
-int exponential_mechanism(nc::NdArray<double> &qualities, double epsilon, double sensitivity) {
-    auto q = qualities - nc::max(qualities);
+
+int exponential_mechanism(std::vector<double> &qualities, double epsilon, double sensitivity) {
+    auto temp = nc::NdArray(qualities);
+    auto q = (temp) - nc::max(temp);
     auto p = nc::special::softmax(0.5 * epsilon / sensitivity * q);
 
     std::random_device rd;

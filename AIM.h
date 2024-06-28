@@ -9,6 +9,7 @@
 #include "mbi/Clique.h"
 #include "mbi/GraphicalModel.h"
 #include "mbi/Inference.h"
+#include "mbi/Dataset.h"
 
 class AIM {
     double rho;
@@ -16,6 +17,9 @@ class AIM {
 
     Clique worst_approximated(std::vector<std::pair<Clique, double>> candidates,
                               Inference &model, double eps, double sigma);
+public:
+    AIM(double epsilon,double delta);
+    void run(Dataset &data, std::vector<Clique> workload);
 };
 
 

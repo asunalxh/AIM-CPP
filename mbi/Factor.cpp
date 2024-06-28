@@ -91,7 +91,7 @@ Factor &Factor::operator=(const FACTOR_TYPE &value) {
     return *this;
 }
 
-Domain Factor::getDomain() {
+Domain & Factor::getDomain() {
     return this->domain;
 }
 

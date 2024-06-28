@@ -30,6 +30,8 @@ public:
     std::vector<Clique> maximal_cliques();
 
     std::vector<Clique> neighbors(const Clique& clique);
+
+    std::vector<Attribute> getOrder();
 };
 
 

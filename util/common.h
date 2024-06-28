@@ -7,8 +7,6 @@
 
 
 using Attribute = std::string;
-
-using DATASET_VALUE_TYPE = int;
 using FACTOR_TYPE = double;
 
 

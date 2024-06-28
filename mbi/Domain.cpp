@@ -129,4 +129,8 @@ Domain Domain::invert(const Clique &d) const {
     return {attrs, shape};
 }
 
+int Domain::size(const Attribute &attrs) const {
+    return this->config.at(attrs);
+}
+
 

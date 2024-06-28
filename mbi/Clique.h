@@ -51,6 +51,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os,const Clique& clique);
 
     std::vector<Attribute>::iterator begin();
+
     std::vector<Attribute>::iterator end();
 
 };
