@@ -20,6 +20,7 @@ public:
     int size() const;
 
     int size(const Clique &attrs) const;
+
     int size(const Attribute &attrs) const;
 
     int length() const;
@@ -30,7 +31,7 @@ public:
 
     Domain merge(const Domain &d) const;
 
-    Domain invert(const Clique& d) const ;
+    Domain invert(const Clique &d) const;
 
     Clique getAttrOrder() const;
 
@@ -44,9 +45,9 @@ public:
 
     bool operator==(const Domain &domain) const;
 
-    Clique canonical(const Clique& clique) const;
+    Clique canonical(const Clique &clique) const;
 
-    static Domain FromFile(const char* path);
+    static Domain FromFile(const char *path);
 
 };
 

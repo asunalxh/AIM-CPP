@@ -30,11 +30,14 @@ public:
     Factor &operator=(const FACTOR_TYPE &value);
 
     Factor &operator*=(const FACTOR_TYPE &value);
+
     Factor operator*(const Factor &factor);
 
     Factor operator-(const Factor &factor) const;
 
     double logsumexp() const;
+
+    Factor logsumexp(Clique& clique) const;
 
     double sum() const;
 

@@ -20,7 +20,7 @@ CliqueVector GraphicalModel::belief_propagation(const CliqueVector &potentials) 
 
     map<pair<Clique, Clique>, Factor> message;
     for (auto &[i, j]: this->messageOrder) {
-        auto seq = this->domain.invert(i + j);
+        auto seq = this->domain.invert(i + j).getAttrOrder();
         auto tmp = message.find({i, j});
         Factor tau;
         if (tmp != message.end())
@@ -28,7 +28,7 @@ CliqueVector GraphicalModel::belief_propagation(const CliqueVector &potentials) 
         else
             tau = beliefs[i];
 
-        message[{i, j}] = tau.logsumexp();
+        message[{i, j}] = tau.logsumexp(seq);
         beliefs[j] += message[{i, j}];
 
     }
