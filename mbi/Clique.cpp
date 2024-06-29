@@ -29,10 +29,10 @@ bool Clique::isSubsetOf(const Clique &clique) const {
         if (x[i] < y[j])
             return false;
         else if (x[i] == y[j])
-            j++;
-        i++;
+            i++;
+        j++;
     }
-    return true;
+    return i == x.size();
 }
 
 Clique &Clique::operator+=(const Clique &clique) {
@@ -78,19 +78,21 @@ Attribute Clique::at(const int &i) const {
 }
 
 bool Clique::operator==(const Clique &clique) const {
-    if (this->size() != clique.size())
-        return false;
-    auto x = this->attrs, y = clique.attrs;
-    std::sort(x.begin(), x.end());
-    std::sort(y.begin(), y.end());
-    for (int i = 0; i < x.size(); i++)
-        if (x[i] != y[i])
-            return false;
-    return true;
+//    if (this->size() != clique.size())
+//        return false;
+//    auto x = this->attrs, y = clique.attrs;
+//    std::sort(x.begin(), x.end());
+//    std::sort(y.begin(), y.end());
+//    for (int i = 0; i < x.size(); i++)
+//        if (x[i] != y[i])
+//            return false;
+//    return true;
+    return this->attrs == clique.attrs;
 }
 
 bool Clique::operator<(const Clique &clique) const {
-    return this->size() < clique.size() && this->isSubsetOf(clique);
+//    return this->size() < clique.size() && this->isSubsetOf(clique);
+    return this->attrs < clique.attrs;
 }
 
 

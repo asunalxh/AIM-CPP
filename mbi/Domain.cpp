@@ -29,7 +29,7 @@ int Domain::size(const Clique &clique) const {
 }
 
 int Domain::size() const {
-    int ret = 0;
+    int ret = 1;
     for (const auto &[k, v]: this->config)
         ret *= v;
     return ret;

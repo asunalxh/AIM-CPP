@@ -25,7 +25,6 @@ set<Clique> downward_closure(vector<Clique> &workload) {
             s.push({i + 1, cl});
         }
     }
-    cout << cliques.size();
     return cliques;
 }
 

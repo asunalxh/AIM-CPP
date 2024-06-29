@@ -14,7 +14,6 @@ Graph<Clique> JunctionTree::makeTree(std::vector<Attribute> order) {
                 graph.addEdge(cl.at(i), cl.at(j));
             }
     }
-    graph.print();
     Graph G(graph);
     set<pair<Attribute, Attribute>> edges;
 
