@@ -106,10 +106,10 @@ JunctionTree::JunctionTree(const Domain &domain, const std::vector<Clique> &cliq
 std::vector<std::pair<Clique, Clique>> JunctionTree::mp_order() {
     auto messages = this->tree.edges();
 
-    Graph<pair<Clique, Clique>> G;
+    Graph<pair<Clique, Clique>> G(true);
     for (int i = 0; i < messages.size(); i++)
         for (int j = i + 1; j < messages.size(); j++)
-            if (messages[i].to == messages[i].from && messages[i].from != messages[j].to) {
+            if (messages[i].to == messages[j].from && messages[i].from != messages[j].to) {
                 G.addEdge({messages[i].from, messages[i].to}, {messages[j].from, messages[j].to});
             }
 

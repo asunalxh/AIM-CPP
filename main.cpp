@@ -9,7 +9,6 @@ using namespace std;
 int main() {
     double epsilon = 1.0, delta = 1e-9;
 
-
     Dataset data = Dataset::FromFile("../data/adult.csv", "../data/adult-domain.json");
     auto attrs = data.getDomain().getAttrOrder().getAttrList();
 

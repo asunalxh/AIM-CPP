@@ -34,7 +34,7 @@ Factor Factor::expand(const Domain &domain) const {
                 oldIndex += weights[attrList[j]] * int(i / w);
             w *= domain.at(attrList[j]);
         }
-        values[i] = this->values[oldIndex];
+        values(0, i) = this->values(0, oldIndex);
     }
     return {domain, values};
 }
@@ -91,7 +91,7 @@ Factor &Factor::operator=(const FACTOR_TYPE &value) {
     return *this;
 }
 
-Domain & Factor::getDomain() {
+Domain &Factor::getDomain() {
     return this->domain;
 }
 
@@ -110,7 +110,7 @@ Factor Factor::project(Clique &clique) const {
                 newIndex += weights[attrList[j]] * int(i / w);
             w *= domain.at(attrList[j]);
         }
-        values[newIndex] += this->values[i];
+        values(0, newIndex) += this->values(0, i);
 
     }
 
