@@ -33,7 +33,7 @@ vector<pair<Clique, double>> compile_workload(vector<Clique> &workload) {
     auto score = [&](const Clique &cl) -> int {
         int ret = 0;
         for (auto &x: cliques)
-            ret += (cl + x).size();
+            ret += (cl | x).size();
         return ret;
     };
 

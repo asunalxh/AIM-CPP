@@ -35,7 +35,7 @@ bool Clique::isSubsetOf(const Clique &clique) const {
     return i == x.size();
 }
 
-Clique &Clique::operator+=(const Clique &clique) {
+Clique &Clique::operator|=(const Clique &clique) {
     for (const auto &k: clique.attrs)
         if (std::find(this->attrs.begin(), this->attrs.end(), k) == this->attrs.end()) {
             this->attrs.push_back(k);
@@ -43,9 +43,9 @@ Clique &Clique::operator+=(const Clique &clique) {
     return *this;
 }
 
-Clique Clique::operator+(const Clique &clique) const {
+Clique Clique::operator|(const Clique &clique) const {
     Clique ret(*this);
-    ret += clique;
+    ret |= clique;
     return ret;
 }
 
@@ -141,6 +141,14 @@ std::vector<Attribute>::iterator Clique::begin() {
 
 std::vector<Attribute>::iterator Clique::end() {
     return this->attrs.end();
+}
+
+Clique Clique::operator&(const Clique &clique) const {
+    Clique ret;
+    for (auto &k: this->attrs)
+        if (clique.contains(k))
+            ret.add(k);
+    return ret;
 }
 
 

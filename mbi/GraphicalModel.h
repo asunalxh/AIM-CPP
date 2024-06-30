@@ -17,8 +17,8 @@ class GraphicalModel {
     double total;
 
     JunctionTree tree;
-    std::vector<std::pair<Clique, Clique>> messageOrder;
     std::vector<Clique> cliques;
+    std::vector<std::pair<Clique,Clique>> messageOrder;
 
 public:
     GraphicalModel(const Domain &domain, std::vector<Clique> cliques, double total = 1.0);

@@ -40,7 +40,7 @@ Domain Domain::merge(const Domain &d) const {
     for (const auto &[k, v]: d.config) {
         newConfig[k] = v;
     }
-    return {newConfig, this->attrOrder + d.attrOrder};
+    return {newConfig, this->attrOrder | d.attrOrder};
 }
 
 Clique Domain::getAttrOrder() const {

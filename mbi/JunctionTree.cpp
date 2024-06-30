@@ -69,7 +69,7 @@ std::vector<Attribute> JunctionTree::greedyOrder() {
                 Clique variables;
                 for (auto &cl: cliques)
                     if (cl.contains(a)) {
-                        variables += cl;
+                        variables |= cl;
                     }
 
                 auto cost = this->domain.size(variables);
@@ -85,7 +85,7 @@ std::vector<Attribute> JunctionTree::greedyOrder() {
         std::vector<Clique> newCliques;
         for (auto &cl: cliques) {
             if (cl.contains(choice)) {
-                variables += cl;
+                variables |= cl;
             } else {
                 newCliques.push_back(cl);
             }

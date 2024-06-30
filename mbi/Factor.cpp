@@ -142,9 +142,9 @@ double Factor::sum() const {
 Factor Factor::logsumexp(Clique &clique) const {
     auto oldValues = nc::exp(this->values);
 
-    auto values = nc::zeros<FACTOR_TYPE>(1, this->domain.size(clique));
-
     auto newDomain = this->domain.invert(clique);
+    auto values = nc::zeros<FACTOR_TYPE>(1, newDomain.size());
+
     auto weights = newDomain.oneDimensionalCoordinateWeight();
 
     auto attrList = this->domain.getAttrOrder().getAttrList();
@@ -152,7 +152,7 @@ Factor Factor::logsumexp(Clique &clique) const {
         int newIndex = 0;
         int w = 1;
         for (int j = attrList.size() - 1; j >= 0; j--) {
-            if (clique.contains(attrList[j]))
+            if (newDomain.contains(attrList[j]))
                 newIndex += weights[attrList[j]] * int(i / w);
             w *= domain.at(attrList[j]);
         }

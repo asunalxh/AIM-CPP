@@ -155,7 +155,7 @@ Dataset Inference::synthetic_data() {
         Clique relevant;
         for (auto &cl: model->getCliques())
             if (cl.contains(order[t])) {
-                relevant += cl;
+                relevant |= cl;
             }
         relevant = relevant.intersection(used);
         relevant.add(order[t]);

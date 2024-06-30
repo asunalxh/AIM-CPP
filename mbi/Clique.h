@@ -28,11 +28,14 @@ public:
 
     Attribute &operator[](const int &i);
 
-    Clique &operator+=(const Clique &clique);
+    Clique &operator|=(const Clique &clique);
+
+    Clique operator|(const Clique &clique) const;
+
+    Clique operator&(const Clique &clique) const;
 
     Clique &operator=(const Clique &clique);
 
-    Clique operator+(const Clique &clique) const;
 
     bool operator==(const Clique &clique) const;
 
