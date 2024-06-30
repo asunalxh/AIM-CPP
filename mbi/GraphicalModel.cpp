@@ -38,7 +38,7 @@ CliqueVector GraphicalModel::belief_propagation(const CliqueVector &potentials) 
         beliefs[cl] += log(this->total) - logZ;
         beliefs[cl] = beliefs[cl].exp();
     }
-    return {beliefs};
+    return beliefs;
 
 }
 

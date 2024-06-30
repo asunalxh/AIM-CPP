@@ -13,12 +13,13 @@ using namespace std;
 void Inference::setup(std::vector<Measurement> &measurements) {
     nc::NdArray<double> variances, estimates;
     for (auto &[cl, sigma, values]: measurements) {
+
         variances = nc::append(variances, {pow(sigma, 2) * nc::shape(values).cols});
         estimates = nc::append(estimates, nc::sum(values));
     }
-    variances = 1.0 / nc::sum(1.0 / variances);
-    estimates = variances * nc::sum(estimates / variances);
-    auto total = max(1.0, estimates(0, 0));
+    auto variance = (1.0 / nc::sum(1.0 / variances))(0,0);
+    auto estimate = (variance * nc::sum(estimates / variances))(0,0);
+    auto total = max(1.0, estimate);
 
     vector<Clique> cliques;
     for (auto &[cl, sigma, values]: measurements)
